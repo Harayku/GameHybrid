@@ -29,6 +29,28 @@
             /* Prevents layout shift */
             transition: opacity 0.5s;
         }
+
+        /* Add this to your <style> section */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg) scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: rotate(180deg) scale(1.2);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: rotate(360deg) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .shop-spin {
+            animation: spin 0.6s cubic-bezier(.68, -0.55, .27, 1.55);
+        }
     </style>
 </head>
 
@@ -38,8 +60,21 @@
         <h1>Player Ore Values</h1>
         <div id="players-list"></div>
     </div>
-    <script src="../javascript/display.js"></script>
 
+    <button id="open-shop" style="margin-top:30px;font-size:1.2em;">Open Shop</button>
+    <!-- Shop Modal -->
+    <div id="shop-modal"
+        style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;z-index:1000;">
+        <div
+            style="background:#fff;color:#222;padding:30px 40px;border-radius:10px;min-width:300px;position:relative;text-align:center;">
+            <h2>Shop</h2>
+            <div id="shop-cards" style="display:flex;gap:20px;justify-content:center;margin:20px 0;"></div>
+            <button id="close-shop" style="margin-top:10px;">Close</button>
+        </div>
+    </div>
+
+    <script src="../javascript/display.js"></script>
+    <script src="../javascript/shop.js"></script>
 </body>
 
 </html>
