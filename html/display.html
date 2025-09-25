@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Live Display</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #212529;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .display {
+            text-align: center;
+        }
+
+        #display-message {
+            font-size: 5vw;
+            /* Font size scales with the viewport width */
+            font-weight: bold;
+            padding: 20px;
+            min-height: 1.2em;
+            /* Prevents layout shift */
+            transition: opacity 0.5s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="display">
+        <h1>Player Ore Values</h1>
+        <div id="players-list"></div>
+    </div>
+    <script src="../javascript/display.js"></script>
+
+</body>
+
+</html>
