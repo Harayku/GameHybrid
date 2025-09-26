@@ -41,6 +41,16 @@ document.querySelectorAll('.player-admin').forEach(div => {
     });
 });
 
-
+channel.onmessage = (event) => {
+    if (event.data.type === 'oreTotals') {
+        event.data.oreTotals.forEach(player => {
+            document.querySelectorAll('.player-admin').forEach(div => {
+                if (div.getAttribute('data-player') === player.name) {
+                    div.querySelector('.player-ore-admin').textContent = `Ore: ${player.ore}`;
+                }
+            });
+        });
+    }
+};
 
 changeNameButton.addEventListener('click', changePlayerName);

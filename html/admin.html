@@ -50,17 +50,22 @@
         #send-button:hover {
             background-color: #0056b3;
         }
+
+        .player-admin {
+            margin-top: 10px;
+        }   
     </style>
 </head>
 
 <body>
 
 <div class="panel">
-    <h1>Admin Sender 📡</h1>
+    <h1>Admin Ore Calculator</h1>
     <p>Update each player's ore value:</p>
     <div id="players-admin">
         <div class="player-admin" data-player="Player1">
-            <strong>Player1</strong><br>
+            <strong>Player1</strong>
+            <span class="player-ore-admin">Ore: 0</span><br>
             <select class="operation">
                 <option value="add">Add</option>
                 <option value="subtract">Subtract</option>
@@ -68,8 +73,10 @@
             <input type="number" class="ore-value" placeholder="Ore value">
             <button class="send-player">Send</button>
         </div>
+        
         <div class="player-admin" data-player="Player2">
-            <strong>Player2</strong><br>
+            <strong>Player2</strong>
+            <span class="player-ore-admin">Ore: 0</span><br>
             <select class="operation">
                 <option value="add">Add</option>
                 <option value="subtract">Subtract</option>
@@ -78,7 +85,8 @@
             <button class="send-player">Send</button>
         </div>
         <div class="player-admin" data-player="Player3">
-            <strong>Player3</strong><br>
+            <strong>Player3</strong>
+            <span class="player-ore-admin">Ore: 0</span><br>
             <select class="operation">
                 <option value="add">Add</option>
                 <option value="subtract">Subtract</option>
@@ -87,7 +95,8 @@
             <button class="send-player">Send</button>
         </div>
         <div class="player-admin" data-player="Player4">
-            <strong>Player4</strong><br>
+            <strong>Player4</strong>
+            <span class="player-ore-admin">Ore: 0</span><br>
             <select class="operation">
                 <option value="add">Add</option>
                 <option value="subtract">Subtract</option>
