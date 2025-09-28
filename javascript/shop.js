@@ -1,9 +1,9 @@
-// --- SHOP FEATURE ---
 const shopItems = [
-    { name: "Double Ore", desc: "Doubles your next ore gain!", cost: 10, img: "../Assets/Agap1.png" },
-    { name: "Ore Magnet", desc: "Gain 5 extra ore instantly.", cost: 8, img: "../Assets/BIlis1.png" },
-    { name: "Lucky Pickaxe", desc: "Next subtraction is halved.", cost: 12, img: "../Assets/Hina1.png" },
-    { name: "Mystery Box", desc: "Random effect!", cost: 15, img: "../Assets/Pagod1.png" },
+    { name: "Agap", desc: "Move Forward (1 - 3 depends on your choice) tiles instantly.", cost: 1, img: "../Assets/Agap1.png" },
+    { name: "Bilis", desc: "Steal 4 points equivalent ore of your pick opponent.", cost: 2, img: "../Assets/BIlis1.png" },
+    { name: "Hina", desc: "Cast on another player; they must skip their next turn.", cost: 1, img: "../Assets/Hina1.png" },
+    { name: "Pagod", desc: "Reverse the player's movement order on their next turn. The player then drops ore based on the number they rolled.",
+         cost: 2, img: "../Assets/Pagod1.png" }
 ];
 
 function getRandomItems(arr, n, exclude = []) {

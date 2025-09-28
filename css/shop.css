@@ -1,0 +1,38 @@
+#open-shop {
+    width: 300px;
+    height: 300px;
+    background-image: url('../Assets/shopclose.png');
+    background-size: cover;
+    background-position: center;
+    transition: opacity 10s ease-in-out;
+
+}
+
+#open-shop:hover {
+    background-image: url('../Assets/shopopen.png');
+    transform: translate(0, -10px);
+    
+    cursor: pointer;
+}
+
+/* Spin Animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.2);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1);
+        opacity: 1;
+    }
+}
+
+.shop-spin {
+    animation: spin 0.6s cubic-bezier(.68, -0.55, .27, 1.55);
+}

@@ -1,0 +1,120 @@
+body {
+    font-family: 'ArcadeClassic';
+    background-color: #212529;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.main-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    justify-content: stretch;
+    background-image: url('../Assets/cave_bg.png');
+    background-size: auto;
+}
+
+.top-row {
+    flex: 2 1 0%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.title {
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1.05;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 0 #000, 0 8px 32px rgba(0, 209, 255, 0.45);
+    margin-bottom: 10px;
+}
+
+.bottom-row {
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: 40px;
+}
+
+.bottom-col {
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-col>div {
+    margin: 10px 0;
+}
+
+.right-col {
+    justify-content: flex-start;
+}
+
+#display-message {
+    font-size: 5vw;
+    /* Font size scales with the viewport width */
+    font-weight: bold;
+    padding: 20px;
+    min-height: 1.2em;
+    /* Prevents layout shift */
+    transition: opacity 0.5s;
+}
+
+#players-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-top: 30px;
+    justify-items: center;
+}
+
+.player-card {
+    background-image: url('../Assets/characterholder.png');
+    background-size: cover;
+    text-align: center;
+    border-radius: 10px;
+    padding: 20px 10px;
+    color: #000000;
+    width: 290px;
+    height: 382px;
+    ;
+    box-shadow: 0 2px 8px #0004;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player-img-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.player-name {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.player-ore {
+    font-size: 2em;
+    margin-top: 2px;
+    margin-bottom: 30px;
+}
