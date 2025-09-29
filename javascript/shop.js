@@ -1,9 +1,9 @@
 const shopItems = [
     { name: "Agap", desc: "Move Forward (1 - 3 depends on your choice) tiles instantly.", cost: 1, img: "../Assets/PotionCards/Agap1.png" },
-    { name: "Bilis", desc: "Steal 4 points equivalent ore of your pick opponent.", cost: 2, img: "../Assets/PotionCards/Bilis1.png" },
+    { name: "Bilis", desc: "Steal 4 points equivalent ore of your pick opponent.", cost: 1, img: "../Assets/PotionCards/Bilis1.png" },
     { name: "Hina", desc: "Cast on another player; they must skip their next turn.", cost: 1, img: "../Assets/PotionCards/Hina1.png" },
     { name: "Pagod", desc: "Reverse the player's movement order on their next turn. The player then drops ore based on the number they rolled.",
-         cost: 2, img: "../Assets/PotionCards/Pagod1.png" }
+         cost: 1, img: "../Assets/PotionCards/Pagod1.png" }
 ];
 
 function getRandomItems(arr, n, exclude = []) {

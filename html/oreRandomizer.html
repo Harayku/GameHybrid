@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ore Spinner</title>
+    <title>Ore Randomizer</title>
     <link href="https://fonts.cdnfonts.com/css/arcade-classic" rel="stylesheet" />
 
     <style>
@@ -24,7 +24,7 @@
 
         body {
             font-family: "ArcadeClassic";
-            background: radial-gradient(var(--bg-spot), var(--bg) 20%);
+            background: radial-gradient(var(--bg));
             color: #e5e7eb;
             display: grid;
             place-items: center;
@@ -80,7 +80,7 @@
 
         /* Fast phase: subtle punch-in + micro blur for speed feel */
         .spinning {
-            transform: scale(2);
+            transform: scale(1.5);
         }
     </style>
 </head>
@@ -108,7 +108,7 @@
             { bg: "#00ff2a" }, // esmeralda
             { bg: "#fbff00" }, // ginto
             { bg: "#a0a0a0" }, // bakal
-            { bg: "#120e0b" }, // tanso
+            { bg: "#d6640c" }, // tanso
             { bg: "#0b0b0c" }, // uling
         ];
 
