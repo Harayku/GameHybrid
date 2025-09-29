@@ -1,11 +1,11 @@
 const players = [
-    { name: "Player1", ore: 0, img: "../Assets/Character 1.png" },
-    { name: "Player2", ore: 0, img: "../Assets/Character 2.png" },
-    { name: "Player3", ore: 0, img: "../Assets/Character 3.png" },
-    { name: "Player4", ore: 0, img: "../Assets/Character 4.png" }
+    { name: "Player1", ore: 0, img: "../Assets/Characters/Character1.gif" },
+    { name: "Player2", ore: 0, img: "../Assets/Characters/Character2.gif" },
+    { name: "Player3", ore: 0, img: "../Assets/Characters/Character3.gif" },
+    { name: "Player4", ore: 0, img: "../Assets/Characters/Character4.gif" }
 ];
-
 const playersList = document.getElementById('players-list');
+
 const channel = new BroadcastChannel('admin_display_channel');
 
 function broadcastOreTotals() {
@@ -27,8 +27,9 @@ function renderPlayers() {
             </div>
         </div>`
     ).join('');
-    broadcastOreTotals(); // <--- Make sure this is here!
+    broadcastOreTotals();
 }
+
 renderPlayers();
 
 channel.onmessage = (event) => {

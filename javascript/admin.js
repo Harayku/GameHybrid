@@ -1,7 +1,6 @@
-// Create a Broadcast Channel. The name must match the display page.
+// BroadcastChannel for communication between admin and display
 const channel = new BroadcastChannel('admin_display_channel');
 
-// Change player name logic (unchanged)
 const oldPlayerNameInput = document.getElementById('old-player-name');
 const newPlayerNameInput = document.getElementById('new-player-name');
 const changeNameButton = document.getElementById('change-name-button');

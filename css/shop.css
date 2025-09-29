@@ -1,7 +1,7 @@
 #open-shop {
-    width: 300px;
-    height: 300px;
-    background-image: url('../Assets/shopclose.png');
+    width: 450px;
+    height: 450px;
+    background-image: url('../Assets/Shop/shopclose.png');
     background-size: cover;
     background-position: center;
     transition: opacity 10s ease-in-out;
@@ -9,10 +9,82 @@
 }
 
 #open-shop:hover {
-    background-image: url('../Assets/shopopen.png');
+    background-image: url('../Assets/Shop/shopopen.png');
     transform: translate(0, -10px);
-    
+
     cursor: pointer;
+}
+
+#shop-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.shop-content {
+    background-image: url('../Assets/Sprite-0003.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    width: 1200px;
+    height: 600px;
+    position: relative;
+    text-align: center;
+}
+
+.shop-card {
+    padding: 20px 15px;
+    height: auto;
+    width: 500px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.shop-card-img {
+    width: 200px;
+    height: 200px;
+    object-fit: scale-down;
+    margin-bottom: 3px;
+}
+
+.shop-card-desc {
+    overflow-wrap: break-word;
+    font-size: 1.50em;
+    margin-bottom: 10px;
+}
+
+.shop-card-price {
+    color: rgb(241, 0, 0);
+    font-size: 1.75em;
+    font-weight: bold;
+}
+
+.reroll-card {
+    padding: 10px 20px;
+    font-family: 'ArcadeClassic';
+    font-size: 1.2em;
+    color: rgb(0, 0, 0);
+    border: none;   
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#shop-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
 }
 
 /* Spin Animation */

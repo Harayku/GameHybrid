@@ -1,8 +1,3 @@
-/* Home page styles */
-@supports (font-variation-settings: normal) {
-  /* hint to use variable font rendering if available */
-}
-
 :root {
   --bg-blur: 6px;
   --glass: rgba(255, 255, 255, 0.08);
