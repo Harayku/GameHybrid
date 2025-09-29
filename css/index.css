@@ -144,13 +144,3 @@ header.brand {
   font-size: 20px;
   opacity: 0.75;
 }
-
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .nav-card { transition: none; }
-  .nav-card:hover, .nav-card:focus-visible { transform: none; }
-}
-
-@media (max-width: 480px) {
-  .logo-frame { width: 78vw; }
-}

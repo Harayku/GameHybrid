@@ -1,204 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft Ore Randomizer</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ore Spinner</title>
+    <link href="https://fonts.cdnfonts.com/css/arcade-classic" rel="stylesheet" />
+
     <style>
-        /* Custom font import for better theme feel */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Pixelify+Sans:wght@400..700&display=swap');
+        :root {
+            --bg: #0f1115;
+            --panel: #151924;
+            --accent: #2dd4bf;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #1e1e1e; /* Dark theme background */
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
+            font-family:"ArcadeClassic";
+            background: radial-gradient(1200px 800px at 50% -100px, #1e2433 0%, var(--bg) 60%) fixed;
+            color: #e5e7eb;
+            display: grid;
+            place-items: center;
+            padding: 24px;
         }
 
-        /* Styling for the roll button */
-        #rollButton {
-            transition: all 0.1s ease-in-out;
-            transform: scale(1);
-        }
-        #rollButton:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.5), 0 4px 6px -2px rgba(34, 197, 94, 0.2); /* Green glow */
-        }
-        #rollButton:active {
-            transform: scale(0.95);
-        }
-
-        /* Initial styling for the result card before any roll */
-        .initial-state {
-            opacity: 0.5;
-            filter: grayscale(100%);
+        .card {
+            width: min(92vw, 420px);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.45),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(6px);
         }
 
-        /* Animation for the card on new roll */
-        @keyframes fadeInScale {
-            0% { opacity: 0; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1); }
+        .frame {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+            border-radius: 18px;
+            background: #0b0f1a;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+            -webkit-user-drag: none;
         }
-        .animate-result {
-            animation: fadeInScale 0.3s ease-out forwards;
+
+        .frame::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(300px 180px at 50% -40px, rgba(45, 212, 191, 0.06), transparent 70%),
+                radial-gradient(240px 160px at 120% 120%, rgba(59, 130, 246, 0.05), transparent 60%),
+                radial-gradient(240px 160px at -20% 120%, rgba(255, 255, 255, 0.04), transparent 60%);
+            pointer-events: none;
+        }
+
+        #oreImg {
+            width: 75%;
+            height: 75%;
+            object-fit: contain;
+            image-rendering: auto;
+            transition: transform 120ms ease, filter 120ms ease, opacity 200ms ease;
+            will-change: transform, filter;
+            opacity: 0.98;
+        }
+
+        /* Fast phase: subtle punch-in + micro blur for speed feel */
+        .spinning #oreImg {
+            transform: scale(1.06);
+            filter: blur(1px);
+            opacity: 0.95;
+        }
+
+        /* Soft hint ring pulse when idle */
+        .frame:not(.spinning):hover {
+            box-shadow:
+                0 0 0 8px rgba(255, 255, 255, 0.02),
+                0 0 0 1px rgba(255, 255, 255, 0.06),
+                0 0 70px var(--ring);
+        }
+
+        .spinning .dot {
+            opacity: 0.08;
         }
     </style>
 </head>
-<body class="selection:bg-green-500 selection:text-white">
 
-    <div class="w-full max-w-lg bg-gray-800 p-8 rounded-xl shadow-2xl border-2 border-gray-700">
-        <!-- Title and Description -->
-        <h1 class="text-4xl font-extrabold text-green-400 text-center mb-4 tracking-wider" style="font-family: 'Pixelify Sans', cursive;">
-            Ore Randomizer
-        </h1>
-        <p class="text-gray-400 text-center mb-8">
-            Click the button to find out which ore you mine next!
-        </p>
-
-        <!-- Result Display Area -->
-        <div id="resultCard" class="initial-state flex flex-col items-center justify-center p-6 bg-gray-700 rounded-lg shadow-inner transition-all duration-500 min-h-[250px] mb-8">
-            <img id="oreImage" 
-                 src="https://placehold.co/150x150/374151/FFFFFF?text=?" 
-                 alt="Placeholder Ore Image" 
-                 class="w-36 h-36 rounded-full object-cover mb-4 ring-4 ring-gray-600 transition-transform duration-300" 
-                 onerror="this.onerror=null; this.src='https://placehold.co/150x150/374151/FFFFFF?text=?';"
-            >
-            <h2 id="oreName" class="text-3xl font-bold text-gray-300 transition-colors duration-300 uppercase tracking-widest">
-                Roll to Begin
-            </h2>
-            <span id="oreTier" class="text-sm text-gray-500 mt-1 transition-colors duration-300">
-                (Click the button below)
-            </span>
+<body>
+    <div class="card">
+        <div id="oreFrame" class="frame" title="Click to spin">
+            <img id="oreImg" alt="Ore" src="https://placehold.co/256x256/374151/ffffff?text=?" />
         </div>
-
-        <!-- Roll Button -->
-        <button id="rollButton" 
-                class="w-full py-4 px-6 bg-green-600 text-white text-xl font-bold rounded-xl hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 uppercase shadow-lg shadow-green-900/50">
-            Roll the Ore!
-        </button>
     </div>
 
     <script>
-        // Define the list of ores with their properties
-        const ORES = [
-            { name: "Diamond", color: "blue", tier: "Rare", 
-              imgUrl: "https://placehold.co/150x150/00FFFF/000000?text=DIAMOND", 
-              bgColor: "bg-blue-900", textColor: "text-blue-300", ringColor: "ring-blue-500" },
-
-            { name: "Emerald", color: "green", tier: "Rare", 
-              imgUrl: "https://placehold.co/150x150/00C78C/000000?text=EMERALD", 
-              bgColor: "bg-green-900", textColor: "text-green-300", ringColor: "ring-green-500" },
-
-            { name: "Gold", color: "yellow", tier: "Uncommon", 
-              imgUrl: "https://placehold.co/150x150/FFD700/000000?text=GOLD", 
-              bgColor: "bg-yellow-900", textColor: "text-yellow-300", ringColor: "ring-yellow-500" },
-
-            { name: "Iron", color: "white", tier: "Common", 
-              imgUrl: "https://placehold.co/150x150/D3D3D3/000000?text=IRON", 
-              bgColor: "bg-gray-600", textColor: "text-gray-300", ringColor: "ring-gray-400" },
-
-            { name: "Copper", color: "orange", tier: "Common", 
-              imgUrl: "https://placehold.co/150x150/B87333/000000?text=COPPER", 
-              bgColor: "bg-orange-900", textColor: "text-orange-300", ringColor: "ring-orange-500" },
-
-            { name: "Coal", color: "black", tier: "Very Common", 
-              imgUrl: "https://placehold.co/150x150/404040/FFFFFF?text=COAL", 
-              bgColor: "bg-gray-900", textColor: "text-gray-500", ringColor: "ring-gray-700" },
+        const ORE_IMAGES = [
+            "../Assets/Ores/dyamante.png",
+            "../Assets/Ores/esmeralda.png",
+            "../Assets/Ores/ginto.png",
+            "../Assets/Ores/bakal.png",
+            "../Assets/Ores/tanso.png",
+            "../Assets/Ores/uling.png"
         ];
 
-        // DOM elements
-        const rollButton = document.getElementById('rollButton');
-        const resultCard = document.getElementById('resultCard');
-        const oreImage = document.getElementById('oreImage');
-        const oreName = document.getElementById('oreName');
-        const oreTier = document.getElementById('oreTier');
+        const PLACEHOLDER = "https://placehold.co/512x512/374151/FFFFFF?text=?";
+        const frame = document.getElementById("oreFrame");
+        const imgEl = document.getElementById("oreImg");
 
-        let lastOre = null;
+        let currentIndex = 0;
+        let spinning = false;
 
-        /**
-         * Cleans up the previous styling classes from the result card and text elements.
-         */
-        function resetClasses() {
-            // Remove all transition classes used for dynamic background/ring/text colors
-            resultCard.classList.remove('initial-state', 'animate-result', ...ORES.map(o => o.bgColor));
-            oreName.classList.remove(...ORES.map(o => o.textColor));
-            oreTier.classList.remove(...ORES.map(o => o.textColor));
-            oreImage.classList.remove(...ORES.map(o => o.ringColor));
-            
-            // Re-apply base classes needed for styling
-            resultCard.classList.add('bg-gray-700');
-            oreImage.classList.add('ring-gray-600');
-            oreName.classList.add('text-gray-300');
-            oreTier.classList.add('text-gray-500');
+        // Preload to keep the fast phase smooth
+        function preloadImages(sources) {
+            return Promise.all(
+                sources.map(src => new Promise(resolve => {
+                    const i = new Image();
+                    i.onload = i.onerror = resolve; // keep going even if a URL fails
+                    i.src = src;
+                }))
+            );
         }
 
-        /**
-         * Rolls a random ore and updates the UI.
-         */
-        function rollOre() {
-            // Disable button during roll process
-            rollButton.disabled = true;
-            rollButton.textContent = 'Mining...';
-            
-            // Simple animation sequence (optional but nice touch)
-            resultCard.classList.add('initial-state');
-            
-            setTimeout(() => {
-                // 1. Select a random ore (ensure it's not the same as the last one if possible)
-                let randomIndex;
-                do {
-                    randomIndex = Math.floor(Math.random() * ORES.length);
-                } while (ORES[randomIndex] === lastOre && ORES.length > 1);
-                
-                const selectedOre = ORES[randomIndex];
-                lastOre = selectedOre;
+        function mod(a, b) { return ((a % b) + b) % b; }
 
-                // 2. Apply new styling and content
-                resetClasses(); // Clear previous colors before applying new ones
+        // Decelerating spinner to a random target index
+        function spin() {
+            if (spinning || ORE_IMAGES.length === 0) return;
+            spinning = true;
+            frame.classList.add("spinning");
 
-                // Update Image and Text
-                oreImage.src = selectedOre.imgUrl;
-                oreName.textContent = selectedOre.name;
-                oreTier.textContent = `Tier: ${selectedOre.tier}`;
+            // Choose a truly random final result
+            const targetIndex = Math.floor(Math.random() * ORE_IMAGES.length);
 
-                // Apply dynamic Tailwind classes
-                resultCard.classList.remove('bg-gray-700');
-                resultCard.classList.add(selectedOre.bgColor, 'animate-result'); // New background and animation
+            // Ensure at least several full rotations before easing to the target
+            const minCycles = 3; // complete cycles
+            let stepsRemaining = minCycles * ORE_IMAGES.length + mod(targetIndex - currentIndex, ORE_IMAGES.length);
 
-                oreName.classList.remove('text-gray-300');
-                oreName.classList.add(selectedOre.textColor);
+            // Start brisk, then ease out
+            let delay = 10; // ms between ticks (fast phase)
+            const tick = () => {
+                currentIndex = (currentIndex + 1) % ORE_IMAGES.length;
+                imgEl.src = ORE_IMAGES[currentIndex] || PLACEHOLDER;
+                stepsRemaining--;
 
-                oreTier.classList.remove('text-gray-500');
-                oreTier.classList.add(selectedOre.textColor);
-                
-                oreImage.classList.remove('ring-gray-600');
-                oreImage.classList.add(selectedOre.ringColor); // New ring color
+                if (stepsRemaining <= 0) {
+                    // Finalize on target
+                    spinning = false;
+                    frame.classList.remove("spinning");
+                    return;
+                }
 
-                resultCard.classList.remove('initial-state');
+                // Deceleration curve: increase delay more as we approach the end
+                if (stepsRemaining < ORE_IMAGES.length * 2) {
+                    delay += 26; // final crawl
+                } else if (stepsRemaining < ORE_IMAGES.length * 4) {
+                    delay += 13; // mid slow
+                } else {
+                    delay += 4;  // gentle slowdown during fast phase
+                }
 
-                // 3. Re-enable button
-                rollButton.disabled = false;
-                rollButton.textContent = 'Roll Again!';
+                setTimeout(tick, delay);
+            };
 
-            }, 300); // Small delay to show "Mining..." state
+            setTimeout(tick, delay);
         }
 
-        // Event Listener
-        rollButton.addEventListener('click', rollOre);
+        // Initial setup
+        (async () => {
+            imgEl.src = ORE_IMAGES[0] || PLACEHOLDER;
+            await preloadImages(ORE_IMAGES);
+            // Click/tap to spin
+            frame.addEventListener("click", spin, { passive: true });
 
-        // Initial content setup (Optional: Run a roll on load)
-        window.onload = () => {
-             // Set the initial descriptive text without running the full roll function
-             oreName.textContent = 'Ready to Mine!';
-             oreTier.textContent = '(Click the button below)';
-             rollButton.textContent = 'Roll the Ore!';
-        };
-
+            // Fallback if any image fails
+            imgEl.onerror = () => { imgEl.src = PLACEHOLDER; };
+        })();
     </script>
 </body>
+
 </html>

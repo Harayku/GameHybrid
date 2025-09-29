@@ -42,10 +42,11 @@ function renderShopCards() {
                 if (newCard) {
                     currentShopCards[idx] = newCard;
                     renderShopCards();
-                    // Disable this re-roll button after use
+
+                    // Disable re-roll button clicking
                     shopCards.querySelectorAll('.reroll-card')[idx].disabled = true;
                 }
-            }, 600); // Match the animation duration
+            }, 600);
             // Remove animation class after animation ends (for next time)
             img.addEventListener('animationend', () => img.classList.remove('shop-spin'), { once: true });
         };
