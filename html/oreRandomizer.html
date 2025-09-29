@@ -9,7 +9,7 @@
 
     <style>
         :root {
-            --bg-spot: #1e2433;
+            --bg-spot: #c2c2c2;
         }
 
         * {
@@ -24,7 +24,7 @@
 
         body {
             font-family: "ArcadeClassic";
-            background: radial-gradient(1200px 800px at 50% -100px, var(--bg-spot) 0%, var(--bg) 60%) fixed;
+            background: radial-gradient(var(--bg-spot), var(--bg) 20%);
             color: #e5e7eb;
             display: grid;
             place-items: center;
@@ -51,6 +51,21 @@
             transition: box-shadow 200ms ease, border-color 200ms ease;
         }
 
+        /* Spin Animation */
+        @keyframes spin {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+            
         #oreImg {
             width: 75%;
             height: 75%;
@@ -59,12 +74,13 @@
             transition: transform 120ms ease, filter 120ms ease, opacity 200ms ease;
             will-change: transform, filter;
             opacity: 0.98;
+            animation: spin 2s;
+            animation-iteration-count: infinite;
         }
 
         /* Fast phase: subtle punch-in + micro blur for speed feel */
-        .spinning  {
+        .spinning {
             transform: scale(2);
-            filter: blur(5px);
         }
     </style>
 </head>
@@ -88,10 +104,10 @@
 
         // Theme per ore same index with ORE_IMAGES
         const ORE_THEME = [
-            { bg: "#08121c" }, // dyamante
-            { bg: "#081612" }, // esmeralda
-            { bg: "#141008" }, // ginto
-            { bg: "#0f1012" }, // bakal
+            { bg: "#00e1ff" }, // dyamante
+            { bg: "#00ff2a" }, // esmeralda
+            { bg: "#fbff00" }, // ginto
+            { bg: "#a0a0a0" }, // bakal
             { bg: "#120e0b" }, // tanso
             { bg: "#0b0b0c" }, // uling
         ];
@@ -171,7 +187,7 @@
                 } else if (stepsRemaining < ORE_IMAGES.length * 4) {
                     delay += 13; // mid slow
                 } else {
-                    delay += 2;  // gentle slowdown during fast phase
+                    delay += 10;  // gentle slowdown during fast phase
                 }
 
                 setTimeout(tick, delay);
