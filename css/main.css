@@ -48,53 +48,17 @@ body {
 }
 
 .bottom-col {
-    display: grid;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: flex;
 }
 
 .left-col {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: var(--guide-row-h);
-    grid-auto-flow: row dense;
-    row-gap: 5px;
-    column-gap: 5px;
-    margin-left: 80px;
-    margin-right: 50px;
-    margin-bottom: 10px;
-}
-
-/* Place 26 guide items into 4 columns with rows: 7, 8, 6, 5 */
-.left-col > .guide-container:nth-child(-n+7) { grid-column: 1; }
-.left-col > .guide-container:nth-child(n+8):nth-child(-n+15) { grid-column: 2; }
-.left-col > .guide-container:nth-child(n+16):nth-child(-n+21) { grid-column: 3; }
-.left-col > .guide-container:nth-child(n+22) { grid-column: 4; }
-
-.guide-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background-color: #4CAF50;
-    color: white;
-    padding: 8px 12px;
-    height: var(--guide-row-h);
-    text-align: left;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.guide-container img {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
-    image-rendering: pixelated;
-}
-
-.guide-container p {
-    margin: 0;
-    white-space: nowrap;
+    width: 1200px;
+    height: 450px;
+    background-image: url('../Assets/guide.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-left: 100px;
+    margin-bottom: 30px;
 }
 
 .right-col {
@@ -103,11 +67,9 @@ body {
 
 #display-message {
     font-size: 5vw;
-    /* Font size scales with the viewport width */
     font-weight: bold;
     padding: 20px;
     min-height: 1.2em;
-    /* Prevents layout shift */
     transition: opacity 0.5s;
 }
 

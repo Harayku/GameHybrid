@@ -9,9 +9,7 @@
 
     <style>
         :root {
-            --bg: #0f1115;
-            --panel: #151924;
-            --accent: #2dd4bf;
+            --bg-spot: #1e2433;
         }
 
         * {
@@ -25,8 +23,8 @@
         }
 
         body {
-            font-family:"ArcadeClassic";
-            background: radial-gradient(1200px 800px at 50% -100px, #1e2433 0%, var(--bg) 60%) fixed;
+            font-family: "ArcadeClassic";
+            background: radial-gradient(1200px 800px at 50% -100px, var(--bg-spot) 0%, var(--bg) 60%) fixed;
             color: #e5e7eb;
             display: grid;
             place-items: center;
@@ -35,23 +33,14 @@
 
         .card {
             width: min(92vw, 420px);
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             padding: 28px;
-            box-shadow:
-                0 10px 30px rgba(0, 0, 0, 0.45),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(6px);
         }
 
         .frame {
             width: 280px;
             height: 280px;
             margin: 0 auto;
-            border-radius: 18px;
-            background: #0b0f1a;
-            border: 1px solid rgba(255, 255, 255, 0.06);
             display: grid;
             place-items: center;
             overflow: hidden;
@@ -59,17 +48,7 @@
             position: relative;
             user-select: none;
             -webkit-user-drag: none;
-        }
-
-        .frame::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(300px 180px at 50% -40px, rgba(45, 212, 191, 0.06), transparent 70%),
-                radial-gradient(240px 160px at 120% 120%, rgba(59, 130, 246, 0.05), transparent 60%),
-                radial-gradient(240px 160px at -20% 120%, rgba(255, 255, 255, 0.04), transparent 60%);
-            pointer-events: none;
+            transition: box-shadow 200ms ease, border-color 200ms ease;
         }
 
         #oreImg {
@@ -83,22 +62,9 @@
         }
 
         /* Fast phase: subtle punch-in + micro blur for speed feel */
-        .spinning #oreImg {
-            transform: scale(1.06);
-            filter: blur(1px);
-            opacity: 0.95;
-        }
-
-        /* Soft hint ring pulse when idle */
-        .frame:not(.spinning):hover {
-            box-shadow:
-                0 0 0 8px rgba(255, 255, 255, 0.02),
-                0 0 0 1px rgba(255, 255, 255, 0.06),
-                0 0 70px var(--ring);
-        }
-
-        .spinning .dot {
-            opacity: 0.08;
+        .spinning  {
+            transform: scale(2);
+            filter: blur(5px);
         }
     </style>
 </head>
@@ -106,7 +72,7 @@
 <body>
     <div class="card">
         <div id="oreFrame" class="frame" title="Click to spin">
-            <img id="oreImg" alt="Ore" src="https://placehold.co/256x256/374151/ffffff?text=?" />
+            <img id="oreImg" alt="Ore" src="" />
         </div>
     </div>
 
@@ -120,7 +86,16 @@
             "../Assets/Ores/uling.png"
         ];
 
-        const PLACEHOLDER = "https://placehold.co/512x512/374151/FFFFFF?text=?";
+        // Theme per ore same index with ORE_IMAGES
+        const ORE_THEME = [
+            { bg: "#08121c" }, // dyamante
+            { bg: "#081612" }, // esmeralda
+            { bg: "#141008" }, // ginto
+            { bg: "#0f1012" }, // bakal
+            { bg: "#120e0b" }, // tanso
+            { bg: "#0b0b0c" }, // uling
+        ];
+
         const frame = document.getElementById("oreFrame");
         const imgEl = document.getElementById("oreImg");
 
@@ -140,7 +115,25 @@
 
         function mod(a, b) { return ((a % b) + b) % b; }
 
-        // Decelerating spinner to a random target index
+        function hexToRgba(hex, alpha) {
+            let h = hex.replace('#', '');
+            if (h.length === 3) {
+                h = h.split('').map(c => c + c).join('');
+            }
+            const r = parseInt(h.slice(0, 2), 16);
+            const g = parseInt(h.slice(2, 4), 16);
+            const b = parseInt(h.slice(4, 6), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        function applyTheme(idx) {
+            const t = ORE_THEME[idx % ORE_THEME.length];
+            if (!t) return;
+            const root = document.documentElement;
+            root.style.setProperty('--bg', t.bg);
+        }
+
+        // Decelerating spinner to a random target index, with live color theming
         function spin() {
             if (spinning || ORE_IMAGES.length === 0) return;
             spinning = true;
@@ -154,14 +147,19 @@
             let stepsRemaining = minCycles * ORE_IMAGES.length + mod(targetIndex - currentIndex, ORE_IMAGES.length);
 
             // Start brisk, then ease out
-            let delay = 10; // ms between ticks (fast phase)
+            let delay = 50; // ms between ticks (fast phase)
             const tick = () => {
                 currentIndex = (currentIndex + 1) % ORE_IMAGES.length;
                 imgEl.src = ORE_IMAGES[currentIndex] || PLACEHOLDER;
+
+                // Update theme to match the currently shown ore while spinning
+                applyTheme(currentIndex);
+
                 stepsRemaining--;
 
                 if (stepsRemaining <= 0) {
-                    // Finalize on target
+                    // Finalize on target (keep the final theme)
+                    applyTheme(targetIndex);
                     spinning = false;
                     frame.classList.remove("spinning");
                     return;
@@ -173,7 +171,7 @@
                 } else if (stepsRemaining < ORE_IMAGES.length * 4) {
                     delay += 13; // mid slow
                 } else {
-                    delay += 4;  // gentle slowdown during fast phase
+                    delay += 2;  // gentle slowdown during fast phase
                 }
 
                 setTimeout(tick, delay);
@@ -185,12 +183,10 @@
         // Initial setup
         (async () => {
             imgEl.src = ORE_IMAGES[0] || PLACEHOLDER;
+            applyTheme(0); // set initial theme to first ore
             await preloadImages(ORE_IMAGES);
             // Click/tap to spin
             frame.addEventListener("click", spin, { passive: true });
-
-            // Fallback if any image fails
-            imgEl.onerror = () => { imgEl.src = PLACEHOLDER; };
         })();
     </script>
 </body>
