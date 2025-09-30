@@ -44,9 +44,16 @@ channel.onmessage = (event) => {
         const { name, operation, value } = event.data;
         const player = players.find(p => p.name.toLowerCase() === name.toLowerCase());
         if (player) {
-            if (operation === 'add') player.ore += value;
-            else if (operation === 'subtract') player.ore -= value;
-            renderPlayers();
+            if (operation === 'add') {
+                player.ore += value
+            } else if (operation === 'subtract') {
+                player.ore -= value;
+                if(player.ore < 0) {
+                    player.ore = 0;
+                    
+                }
+            }
         }
+        renderPlayers();
     }
 };
