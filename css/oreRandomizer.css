@@ -59,7 +59,7 @@ body {
     transition: transform 120ms ease, filter 120ms ease, opacity 200ms ease;
     will-change: transform, filter;
     opacity: 0.98;
-    animation: pulses 2s;
+    animation: pulse 4s ease-in-out infinite;
     animation-iteration-count: infinite;
 }
 

@@ -25,19 +25,20 @@ function changePlayerName() {
 // Add event listeners for each player's send button
 document.querySelectorAll('.player-admin').forEach(div => {
     const name = div.getAttribute('data-player');
-    const operationSelect = div.querySelector('.operation');
     const oreValueInput = div.querySelector('.ore-value');
-    const sendButton = div.querySelector('.send-player');
+    const addButton = div.querySelector('.add-btn');
+    const subtractButton = div.querySelector('.subtract-btn');
 
-    sendButton.addEventListener('click', () => {
+    const sendOperation = (operation) => {
         const name = div.getAttribute('data-player');
-        const operation = operationSelect.value;
         const value = parseInt(oreValueInput.value, 10);
         if (!isNaN(value)) {
             channel.postMessage({ name, operation, value });
             oreValueInput.value = '';
         }
-    });
+    };
+    addButton.addEventListener('click', () => sendOperation('add'));
+    subtractButton.addEventListener('click', () => sendOperation('subtract'));
 });
 
 channel.onmessage = (event) => {

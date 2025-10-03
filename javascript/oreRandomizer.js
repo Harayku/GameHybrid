@@ -64,11 +64,11 @@ function spin() {
     const targetIndex = Math.floor(Math.random() * ORE_IMAGES.length);
 
     // Ensure at least several full rotations before easing to the target
-    const minCycles = 3; // complete cycles
+    const minCycles = 1; // complete cycles
     let stepsRemaining = minCycles * ORE_IMAGES.length + mod(targetIndex - currentIndex, ORE_IMAGES.length);
 
     // Start brisk, then ease out
-    let delay = 50; // ms between ticks (fast phase)
+    let delay = 10; // ms between ticks (fast phase)
     const tick = () => {
         currentIndex = (currentIndex + 1) % ORE_IMAGES.length;
         imgEl.src = ORE_IMAGES[currentIndex] || PLACEHOLDER;

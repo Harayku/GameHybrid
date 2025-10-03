@@ -6,60 +6,57 @@
     <title>Admin Panel</title>
 
     <link rel="stylesheet" href="../css/admin.css" />
+    <link href="https://fonts.cdnfonts.com/css/arcade-classic" rel="stylesheet" />
+
 <body>
 
-<div class="panel">
-    <h1>Admin Ore Calculator</h1>
-    <p>Update each player's ore value:</p>
-    <div id="players-admin">
-        <div class="player-admin" data-player="Player1">
-            <strong>Player1</strong>
-            <span class="player-ore-admin">Ore: 0</span><br>
-            <select class="operation">
-                <option value="add">Add</option>
-                <option value="subtract">Subtract</option>
-            </select>
-            <input type="number" class="ore-value" placeholder="Ore value">
-            <button class="send-player">Send</button>
+    <div class="panel">
+        <h1>Admin Ore Calculator</h1>
+        <p>Update each player's ore value:</p>
+        <div id="players-admin">
+            <div class="player-admin" data-player="Player1">
+                <strong>Player1</strong>
+                <span class="player-ore-admin">Ore: 0</span><br>
+                <input type="number" class="ore-value" placeholder="Enter ore value">
+                <div>
+                    <button class="admin-btn add-btn">Add</button>
+                    <button class="admin-btn subtract-btn">Subtract</button>
+                </div>
+            </div>
+            <div class="player-admin" data-player="Player2">
+                <strong>Player2</strong>
+                <span class="player-ore-admin">Ore: 0</span><br>
+                <input type="number" class="ore-value" placeholder="Enter Ore value">
+                <div>
+                    <button class="admin-btn add-btn">Add</button>
+                    <button class="admin-btn subtract-btn">Subtract</button>
+                </div>
+            </div>
+            <div class="player-admin" data-player="Player3">
+                <strong>Player3</strong>
+                <span class="player-ore-admin">Ore: 0</span><br>
+                <input type="number" class="ore-value" placeholder="Enter Ore value">
+                <div>
+                    <button class="admin-btn add-btn">Add</button>
+                    <button class="admin-btn subtract-btn">Subtract</button>
+                </div>
+            </div>
+            <div class="player-admin" data-player="Player4">
+                <strong>Player4</strong>
+                <span class="player-ore-admin">Ore: 0</span><br>
+                <input type="number" class="ore-value" placeholder="Enter Ore value">
+                <div>
+                    <button class="admin-btn add-btn">Add</button>
+                    <button class="admin-btn subtract-btn">Subtract</button>
+                </div>
+            </div>
         </div>
-        
-        <div class="player-admin" data-player="Player2">
-            <strong>Player2</strong>
-            <span class="player-ore-admin">Ore: 0</span><br>
-            <select class="operation">
-                <option value="add">Add</option>
-                <option value="subtract">Subtract</option>
-            </select>
-            <input type="number" class="ore-value" placeholder="Ore value">
-            <button class="send-player">Send</button>
-        </div>
-        <div class="player-admin" data-player="Player3">
-            <strong>Player3</strong>
-            <span class="player-ore-admin">Ore: 0</span><br>
-            <select class="operation">
-                <option value="add">Add</option>
-                <option value="subtract">Subtract</option>
-            </select>
-            <input type="number" class="ore-value" placeholder="Ore value">
-            <button class="send-player">Send</button>
-        </div>
-        <div class="player-admin" data-player="Player4">
-            <strong>Player4</strong>
-            <span class="player-ore-admin">Ore: 0</span><br>
-            <select class="operation">
-                <option value="add">Add</option>
-                <option value="subtract">Subtract</option>
-            </select>
-            <input type="number" class="ore-value" placeholder="Ore value">
-            <button class="send-player">Send</button>
-        </div>
+        <hr>
+        <p>Change a player's name:</p>
+        <input type="text" id="old-player-name" placeholder="Current player name">
+        <input type="text" id="new-player-name" placeholder="New player name">
+        <button id="change-name-button" class="change-btn">Change Name</button>
     </div>
-    <hr>
-    <p>Change a player's name:</p>
-    <input type="text" id="old-player-name" placeholder="Current player name">
-    <input type="text" id="new-player-name" placeholder="New player name">
-    <button id="change-name-button">Change Name</button>
-</div>
 
     <script src="../javascript/admin.js"></script>
 </body>
