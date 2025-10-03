@@ -5,14 +5,17 @@
     <meta charset="UTF-8">
     <title>Display</title>
 
-    <link  rel="stylesheet"  href="../css/main.css"/>
-    <link  rel="stylesheet"  href="../css/shop.css"/>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/shop.css" />
 
     <!--Pixel Font Import -->
     <link href="https://fonts.cdnfonts.com/css/arcade-classic" rel="stylesheet" />
 </head>
 
 <body>
+    <audio id="background-music" autoplay loop>
+        <source src="../assets/music/audio001.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="main-layout">
         <div class="top-row">
@@ -20,6 +23,7 @@
                 <h1 class="title">Player Ore Values</h1>
                 <div id="players-list"></div>
             </div>
+            <button id="mute-btn">Mute</button> <!-- Mute Button -->
         </div>
 
         <div class="bottom-row">
@@ -37,6 +41,7 @@
         </div>
     </div>
 
+    <script src="../javascript/music.js"></script>
     <script src="../javascript/display.js"></script>
     <script src="../javascript/shop.js"></script>
 </body>

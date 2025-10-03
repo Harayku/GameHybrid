@@ -48,9 +48,9 @@ channel.onmessage = (event) => {
                 player.ore += value
             } else if (operation === 'subtract') {
                 player.ore -= value;
-                if(player.ore < 0) {
+                if (player.ore < 0) {
                     player.ore = 0;
-                    
+
                 }
             }
         }
