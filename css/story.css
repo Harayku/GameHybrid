@@ -6,7 +6,7 @@
 
 body {
     font-family: 'ArcadeClassic';
-    background: #0a0a0a;
+    background-image: url(../Assets/cave_bg.png);
     color: #fff;
     overflow: hidden;
     height: 100vh;
